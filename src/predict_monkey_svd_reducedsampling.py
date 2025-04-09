@@ -1,7 +1,7 @@
 """
 Copyright (c) 2025 Bahareh Tolooshams
 
-prediction script
+prediction monkey reduced-sampling
 
 :author: Bahareh Tolooshams
 """
