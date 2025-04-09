@@ -1,0 +1,54 @@
+default: &DEFAULT
+
+  ########################################
+  ########################################
+  # Things you want to make are within this box
+
+  # for visualization
+  vis_svd: True
+  vis_svd_full: True
+
+  test_no_runtime: False
+  
+  start_bin: 1
+  end_bin: 310
+  
+  ##### for 32
+  num_frames: 32
+  svd_with_respect_to_full_frames_limited: 110 # for 32
+
+  # ###### for 64
+  # num_frames: 64
+  # svd_with_respect_to_full_frames_limited: 90 # 90 # for 64
+
+  remove_top_pixels: 43
+
+  #### these are for interleaved
+  svd_with_respect_to_full_frames: 20
+
+  crop_dim: [208, 128]
+  num_frames_full: 300 # total number of frames in one bin
+  num_channels: 128 # the channels to reshape the image
+  
+  model_path: "../results/..." # done
+  model_type: "final"
+  
+  test_data_path: "/data/fus/human/L10_124221" # H1
+  # test_data_path: "/data/fus/human/L10_121815" # H2
+
+  ########################################
+  ########################################
+
+  # general
+  cudan: 0 # gpu number"
+  disable_inner_loop: True
+  
+  # loader
+  loader:
+    svd_function: FUSdatasetOnlineSettingDOPfromSVDinterleaved
+    no_function: FUSdatasetOnlineSettingIQinterleaved
+    no_function_for_guidedsvd: FUSdatasetOnlineSettingIQDOPsvdinterleaved
+    take_random_window: True
+    shuffle: False
+    batch_size: 1
+    num_workers: 8

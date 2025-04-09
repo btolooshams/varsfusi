@@ -1,0 +1,107 @@
+default: &DEFAULT
+
+  # general
+  cudan: 0 # gpu number"
+  wandb:
+    flag: True
+    dir: "/tmp"
+    entity: "btolooshams"
+  proj_name: "varsfusi"
+  summary_test: False
+  disable_inner_loop: True
+  
+  exp_name: "deepfus_32frames"
+
+  model: "DeepfUS"
+  iq_signal_mode: "real" # e.g., real, abs, complex
+  num_frames: 32
+
+ ########################################
+ ########################################
+  # standardization
+  standardization_constant_path: "/data/fus/multimice/train_real_32_128_withtransformation_scalar_standardization_constant.pt"
+  standardize_dop_by_scalar: False # standardize dop by scalar mean and std
+  standardize_iq_by_scalar: False # standardize iq by scalar mean and std
+
+  # data path
+  data_path:
+    train: "/data/fus/multimice/train"
+    test: "/data/fus/multimice/test"
+    test_out: "/data/fus/multimice/test_out"
+    val: "/data/fus/multimice/val"
+  ########################################
+  ########################################
+
+
+  model_params:
+    dropout: 0.2
+    residual: True
+
+    conv3d:
+      enable: True
+      outch: 4
+      kernelsize_relative: 0.2
+
+    num_channels: [32, 64, 128, 256, 512]
+
+  # Optimizer
+  opt:
+    num_epochs: 600
+    lr: 1e-4
+    weight_decay: 1e-5
+
+    scheduler_tmax: 500 # For cosine only, typically take n_epochs
+    scheduler_patience: 10 # For ReduceLROnPlateau only
+    scheduler: 'StepLR' # Or 'CosineAnnealingLR' OR 'ReduceLROnPlateau'
+    scheduler_stepsize: 600
+    scheduler_gamma: 0.5
+
+    grad_clip: 5.0
+    
+  loader:
+    function: FUSdataset
+    take_random_window: True
+    crop_dim: [128, 128]
+    train_batch_size: 1
+    test_batch_size: 1
+    num_workers: 16
+    train_flip_h: True
+    train_flip_v: True
+    train_rotate:
+      flag: True
+      degrees: [-10, 10]
+      p: 0.5
+    train_random_crop: True
+    train_random_crop_resize:
+      flag: False
+      scale: [0.08, 1.0]
+      ratio: [0.9, 1.1]
+      antialias: True
+    train_noise:
+      flag: False
+      mean: 0
+      std: 1e+6
+      p: 0.5
+    train_masking:
+      flag: False
+      p: 0.5
+      mask_prob_range: [0.1, 0.3]
+    train_mix:
+      flag: False
+      p: 0.99
+
+
+  # loss related
+  loss:
+    ssim_flag: False
+    ssim_win_size: 7
+    ssim_normalize_together: False
+    ssim_normalize_data_into_range: False
+    ssim_divide_by: 1
+    ssim_alpha: 0.0
+    mse_alpha: 0.5
+    mae_alpha: 0.5
+
+  tqdm_prints_disable: False
+  log_info_epoch_period: 1
+  log_fig_epoch_period: 50

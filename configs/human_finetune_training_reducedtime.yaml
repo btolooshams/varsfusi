@@ -1,0 +1,47 @@
+default: &DEFAULT
+
+  ########################################
+  ########################################
+  # Things you want to make are within this box
+
+  # data, out, model paths
+  train_finetune_dataset: "/data/fus/human/L10_124221"
+  out_path: "../results/human"
+  
+  model_path: "../results/xxx"
+
+  num_data: 32 # how many bin to use for training (form the beginning)
+
+  remove_top_pixels: 43
+
+  
+  # for the data collection
+  num_frames_full: 300 # total number of frames in one bin
+  num_channels: 128 # the channels to reshape the image
+
+  ###### this is for reduced-time
+  # training
+  svd_for_training: 20 # this is to remove ..% of the sv
+  svd_for_training_limited: 60 # this is based on the full, but it will be used for limited, e.g., 32 * 70/300
+
+  crop_dim: [208, 128]
+  num_steps: 5120
+ 
+  num_workers: 8
+
+  ########################################
+  ########################################
+  # general
+  cudan: 0 # gpu number"
+
+  lr_finetune: 1e-4
+
+  # for training loss
+  ssim_alpha: 0.0
+  mse_alpha: 0.5
+  mae_alpha: 0.5
+  ssim_flag: False
+  ssim_win_size: 7
+  ssim_normalize_data_into_range: False
+  ssim_normalize_together: False
+  ssim_divide_by: 1
