@@ -1032,14 +1032,20 @@ class VARSfUSIrealwoSG(torch.nn.ModuleDict):
 
 
 class DnCNN(torch.nn.Module):
-    def __init__(self, channels, num_layers=4, features=64):
-        super(DnCN, self).__init__()
-        kernel_size = 3
-        padding = 1
+    def __init__(self, params):
+        super(DnCNN, self).__init__()
+
+        in_channels = params.model_params.in_channels
+        out_channels = params.model_params.out_channels
+        features = params.model_params.features
+        num_layers = params.model_params.num_layers
+        kernel_size = params.model_params.kernel_size
+        padding = params.model_params.padding
+
         layers = []
         layers.append(
             torch.nn.Conv2d(
-                in_channels=channels,
+                in_channels=in_channels,
                 out_channels=features,
                 kernel_size=kernel_size,
                 padding=padding,
@@ -1062,7 +1068,7 @@ class DnCNN(torch.nn.Module):
         layers.append(
             torch.nn.Conv2d(
                 in_channels=features,
-                out_channels=channels,
+                out_channels=out_channels,
                 kernel_size=kernel_size,
                 padding=padding,
                 bias=False,
@@ -1071,6 +1077,7 @@ class DnCNN(torch.nn.Module):
         self.dncnn = torch.nn.Sequential(*layers)
 
     def forward(self, x):
+        x = x.permute(0, 3, 1, 2)
         out = self.dncnn(x)
         return out
 

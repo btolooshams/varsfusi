@@ -10,11 +10,12 @@ default: &DEFAULT
   summary_test: False
   disable_inner_loop: True
   
-  exp_name: "deepfus_32frames"
+  exp_name: "dncnn_32frames"
 
-  model: "DeepfUS"
+  model: "DnCNN"
   iq_signal_mode: "real" # e.g., real, abs, complex
   num_frames: 32
+
 
  ########################################
  ########################################
@@ -34,15 +35,14 @@ default: &DEFAULT
 
 
   model_params:
-    dropout: 0.2
-    residual: True
+    in_channels: 32
+    out_channels: 1
 
-    conv3d:
-      enable: True
-      outch: 4
-      kernelsize_relative: 0.2
+    features: 64
+    num_layers: 17
 
-    num_channels: [32, 64, 128, 256, 512]
+    kernel_size: 3
+    padding: 1
 
   # Optimizer
   opt:

@@ -20,7 +20,7 @@ import json
 import pickle
 import pytorch_msssim
 
-import datasetloader, lossfunc, utils, metrics
+import datasetloader, lossfunc, model, utils, metrics
 
 
 def init_params():
@@ -30,11 +30,11 @@ def init_params():
         type=str,
         help="config filename",
         default="./varsfusi.yaml",
-        default="./varsfusi_wo_sg.yaml",
-        default="./varsfusi_real_wo_sg.yaml",
-        default="./deepfus.yaml",
-        default="./deepfus_base.yaml",
-        default="./dncnn.yaml",
+        # default="./varsfusi_wo_sg.yaml",
+        # default="./varsfusi_real_wo_sg.yaml",
+        # default="./deepfus.yaml",
+        # default="./deepfus_base.yaml",
+        # default="./dncnn.yaml",
     )
     params = parser.parse_args()
 
@@ -364,7 +364,7 @@ def main():
 
     # create model ---------------------------------------------------------#
     print("create model.")
-    net, params = utils.get_model(params)
+    net = getattr(model, params.model)(params)
 
     num_params = sum(p.numel() for p in net.parameters() if p.requires_grad)
     print("num_params:", num_params)
