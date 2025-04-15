@@ -20,7 +20,7 @@ default: &DEFAULT
  ########################################
  ########################################
   # standardization
-  standardization_constant_path: "/data/fus/multimice/train_real_16_128_withtransformation_scalar_standardization_constant.pt"
+  standardization_constant_path: "/data/fus/multimice/train_real_32_128_withtransformation_scalar_standardization_constant.pt"
   standardize_dop_by_scalar: False # standardize dop by scalar mean and std
   standardize_iq_by_scalar: False # standardize iq by scalar mean and std
 
