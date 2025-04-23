@@ -5,6 +5,8 @@
 
 This repo is in progress.
 
+See BioRxiv [https://www.biorxiv.org/content/10.1101/2025.04.16.649237v1](https://www.biorxiv.org/content/10.1101/2025.04.16.649237v1)
+
 ### PATH
 
 For any scripts to run, make sure you are in `src` directory.
